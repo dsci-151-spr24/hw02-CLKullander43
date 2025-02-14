@@ -1,17 +1,23 @@
 ---
 title: "HW 04 - What should I major in?"
 author: "Caeden Kullander"
-output: 
+output:
+  pdf_document:
+    latex_engine: xelatex
+    fig_height: 5
+    highlight: tango
   tufte::tufte_html:
     css: ../hw.css
-    tufte_variant: "envisioned"
+    tufte_variant: envisioned
     highlight: pygments
+  html_document:
+    df_print: paged
 link-citations: true
 ---
 
 ```{r include = FALSE}
 knitr::opts_chunk$set(
-  eval = FALSE,
+  eval = TRUE,
   out.width = "80%",
   fig.asp = 0.618,
   fig.width = 10,
@@ -307,8 +313,30 @@ college_recent_grads %>%
 
 9.  Create a scatterplot of median income vs. proportion of women in that major, coloured by whether the major is in a STEM field or not. Describe the association between these three variables.
 
+```{r women, eval=TRUE}
+ggplot(data = college_recent_grads, 
+       mapping = aes(x = median, y = sharewomen, color = major_type)) +
+  geom_point()
+
+```
+
+**On average, there are fewer women in stem fields. More women also tend to do majors that pay less. The general trend is that as the number of women decreases, the pay increases and it is more likely to be a stem field.**
+
 ## Further exploration
 
 10. Ask a question of interest to you, and answer it using summary statistic(s) and/or visualization(s).
+
+
+**How do unemployment rates and non-college job rates compare between stem and non-stem fields?**
+
+```{r stem-jobs}
+ggplot(data = college_recent_grads, 
+       mapping = aes(x = unemployment_rate, y = non_college_jobs, color = major_type)) +
+  geom_point() +
+  ylim(0, 100000)
+
+```
+
+**The unemployment rate is surpisingly similar between fields. However, stem fields have a much lower rate of non-college jobs.**
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
